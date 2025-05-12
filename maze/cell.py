@@ -1,3 +1,5 @@
+from line import Line
+from point import Point
 
 # lets go for most likely to be rewritten class!
 class Cell():
@@ -22,7 +24,42 @@ class Cell():
             canvas.create_line(self._x, self._y+self._size, self._x+self._size, self._y+self._size, fill="black", width=2)
 
     def get_loc(self):
+        return (self._x, self._y)
+
+    def get_center(self):
         return (self._x + self._size/2, self._y + self._size/2)
+    
+    def get_render_lines(self):
+        lines = []
+        if self.left_wall:
+            lines.append((
+                Line(
+                    Point(self._x, self._y),
+                    Point(self._x, self._y+self._size)
+                    ),
+                    "black"))
+        if self.right_wall:
+            lines.append((
+                Line(
+                    Point(self._x + self._size, self._y),
+                    Point(self._x+self._size, self._y+self._size)
+                    ),
+                    "black"))
+        if self.top_wall:
+            lines.append((
+                Line(
+                    Point(self._x, self._y),
+                    Point(self._x+self._size, self._y)
+                    ),
+                    "black"))
+        if self.bottom_wall:
+            lines.append((
+                Line(
+                    Point(self._x, self._y+self._size),
+                    Point(self._x+self._size, self._y+self._size)
+                    ),
+                    "black"))
+        return lines
 
     def draw_move(self, canvas,  to_cell, undo=False):
         start = (self._x + self._size/2, self._y + self._size / 2)

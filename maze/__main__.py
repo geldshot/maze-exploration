@@ -17,7 +17,14 @@ def main(*args, **kwargs):
     cells = [
         Cell(i*50+50, 300, 50) for i in range(10)
     ]
-    
+
+    render_lines = []
+    for cell in cells:
+        render_lines.extend(cell.get_render_lines())
+
+
+    for line in render_lines:
+        wind.draw_line(line[0], line[1])
     for cell in cells:
         wind.draw_cell(cell)
 
@@ -27,9 +34,24 @@ def main(*args, **kwargs):
         cells[5]
     ]
 
-    wind.draw_path(path)
+    path_lines = build_path(path)
+
+    for line in path_lines:
+        wind.draw_line(line)
 
     wind.wait_for_close()
+
+def build_path(cells):
+    if not cells:
+        return
+    path = []
+    a1 = cells[0].get_center()
+
+    for index in range(len(cells)-1):
+        a2 = cells[index+1].get_center()
+        path.append(Line(Point(a1[0],a1[1]),Point(a2[0], a2[1])))
+        a1 = a2
+    return path
 
 if __name__ == "__main__":
     main(sys.argv)
