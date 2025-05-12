@@ -1,0 +1,22 @@
+
+# lets go for most likely to be rewritten class!
+class Cell():
+    def __init__(self, x, y, size, tags={}, left_wall=True, right_wall=True, top_wall=True, bottom_wall=True):
+        self._x = x
+        self._y = y
+        self._size = size
+        self.tags = tags
+        self.left_wall = left_wall
+        self.right_wall = right_wall
+        self.top_wall = top_wall
+        self.bottom_wall = bottom_wall
+
+    def draw(self, canvas):
+        if self.left_wall:
+            canvas.create_line(self._x, self._y, self._x, self._y+self._size, fill="black", width=2)
+        if self.right_wall:
+            canvas.create_line(self._x+self._size, self._y, self._x+self._size, self._y+self._size, fill="black", width=2)
+        if self.top_wall:
+            canvas.create_line(self._x, self._y, self._x+self._size, self._y, fill="black", width=2)
+        if self.bottom_wall:
+            canvas.create_line(self._x, self._y+self._size, self._x+self._size, self._y+self._size, fill="black", width=2)
