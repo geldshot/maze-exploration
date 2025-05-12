@@ -21,6 +21,14 @@ def main(*args, **kwargs):
     for cell in cells:
         wind.draw_cell(cell)
 
+    path = [
+        cells[0],
+        cells[2],
+        cells[5]
+    ]
+
+    wind.draw_path(path)
+
     wind.wait_for_close()
 
 if __name__ == "__main__":

@@ -20,3 +20,14 @@ class Cell():
             canvas.create_line(self._x, self._y, self._x+self._size, self._y, fill="black", width=2)
         if self.bottom_wall:
             canvas.create_line(self._x, self._y+self._size, self._x+self._size, self._y+self._size, fill="black", width=2)
+
+    def get_loc(self):
+        return (self._x + self._size/2, self._y + self._size/2)
+
+    def draw_move(self, canvas,  to_cell, undo=False):
+        start = (self._x + self._size/2, self._y + self._size / 2)
+        stop = to_cell.get_loc()
+        fill_color="gray"
+        if undo:
+            fill_color = "red"
+        canvas.create_line(start[0], start[1], stop[0], stop[1], fill=fill_color, width=2)

@@ -29,3 +29,9 @@ class Window():
     
     def draw_cell(self, cell):
         cell.draw(self.canvas)
+
+    def draw_path(self, cells):
+        if not cells:
+            return
+        for i in range(len(cells)-1):
+            cells[i].draw_move(self.canvas,cells[i+1])
