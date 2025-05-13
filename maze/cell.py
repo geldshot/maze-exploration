@@ -25,3 +25,6 @@ class Cell():
     
     def is_connected(self, other):
         return not other is None and other in self.links
+    
+    def __eq__(self, other):
+        return self.row == other.row and self.col == other.col
