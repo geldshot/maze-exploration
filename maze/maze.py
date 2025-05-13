@@ -89,9 +89,24 @@ class Maze():
             if not right and not cell.down is None: 
                 cell.connect(cell.down)
 
-            if right and cell.right is None and not cell.down is None :
-                print(cell.right)
-                print(cell.down)
+            if right and cell.right is None:
                 cell.connect(cell.down) 
-            if not right and cell.down is None and not cell.right is None :
+            if not right and cell.down is None:
                 cell.connect(cell.right)
+
+    def create_sidewinder_maze(self):
+        run = []
+        for row in self._cells:
+            
+            for cell in row:
+                right = random.randint(0,1)==1
+                run.append(cell)
+                if not right and not cell.down is None:
+                    chosen = random.choice(run)
+                    chosen.connect(chosen.down)
+                    run.clear()
+                elif not cell.right is None:
+                    cell.connect(cell.right)
+                else:
+                    cell.connect(cell.down)
+            run.clear()

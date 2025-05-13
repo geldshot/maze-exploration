@@ -14,7 +14,7 @@ class Cell():
 
     def connect(self, cell):
         if not isinstance(cell, Cell):
-            raise Exception("attempted linking non-cell")
+            return
         if not cell in self.links and not cell is None:
             self.links.append(cell)
         if not self in cell.links and not cell is None:

@@ -6,7 +6,7 @@ def main(*args, **kwargs):
     wind = Window(800, 600)
 
     mz = Maze(10, 10, 20, 20, 25, 25)
-    mz.create_binary_maze()
+    mz.create_sidewinder_maze()
 
     lines = mz.get_render_lines()
     for line in lines:
