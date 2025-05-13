@@ -1,6 +1,8 @@
-from .cell import Cell
-from .line import Line
-from .point import Point
+import random
+
+from cell import Cell
+from line import Line
+from point import Point
 
 class Maze():
     def __init__(
@@ -33,12 +35,15 @@ class Maze():
             for col in range(self.num_cols):
                 cells[row].append(Cell(col, row))
                 if row > 0:
-                    cells[row-1][col].right = cells[row][col]
-                    cells[row][col].left = cells[row-1][col]
+                    cells[row-1][col].down = cells[row][col]
+                    cells[row][col].up = cells[row-1][col]
                 if col > 0:
-                    cells[row][col-1].down = cells[row][col]
-                    cells[row][col].up = cells[row][col-1]
+                    cells[row][col-1].right = cells[row][col]
+                    cells[row][col].left = cells[row][col-1]
         self._cells = cells
+
+    def reset(self):
+        self._create_cells()
 
     def get_render_lines(self):
         r_lines = []
@@ -70,3 +75,23 @@ class Maze():
         h = self.cell_size_y
         w = self.cell_size_x
         return Line(Point(x+(x1*w), y+(y1*h)), Point(x+(x2*w), y+(y2*h)))
+    
+    def create_binary_maze(self):
+
+        to_visit = []
+        for row in self._cells:
+            to_visit.extend(row)
+        
+        for cell in to_visit:
+            right = random.randint(0,1)==1
+            if right and not cell.right is None:
+                cell.connect(cell.right)
+            if not right and not cell.down is None: 
+                cell.connect(cell.down)
+
+            if right and cell.right is None and not cell.down is None :
+                print(cell.right)
+                print(cell.down)
+                cell.connect(cell.down) 
+            if not right and cell.down is None and not cell.right is None :
+                cell.connect(cell.right)
