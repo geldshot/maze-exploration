@@ -46,7 +46,7 @@ class Maze():
         for row in range(self.num_rows):
             cells.append([])
             for col in range(self.num_cols):
-                cells[row].append(Cell(col, row))
+                cells[row].append(Cell(row, col))
                 if row > 0:
                     cells[row-1][col].down = cells[row][col]
                     cells[row][col].up = cells[row-1][col]
@@ -91,10 +91,15 @@ class Maze():
     
     def get_path_lines(self, cells=[]):
         lines = []
-        c1 = cells[0]
-        for i in range(len(cells)-1):
-            c2 = cells[i+1]
-            lines.append(self._line_adjusted(c1.col+.5, c1.row+.5, c2.col+.5, c2.row+.5))
+        if not isinstance(cells[0], tuple):
+
+            c1 = cells[0]
+            for i in range(len(cells)-1):
+                c2 = cells[i+1]
+                lines.append(self._line_adjusted(c1.col+.5, c1.row+.5, c2.col+.5, c2.row+.5))
+        else:
+            for pair in cells:
+                lines.append(self._line_adjusted(pair[0].col+.5,pair[0].row+.5, pair[1].col+.5, pair[1].row+.5))
         return lines
     
     def create_binary_maze(self):

@@ -28,3 +28,6 @@ class Cell():
     
     def __eq__(self, other):
         return self.row == other.row and self.col == other.col
+    
+    def __str__(self):
+        return f'({self.row}, {self.col})'
