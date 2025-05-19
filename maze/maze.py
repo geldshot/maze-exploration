@@ -20,6 +20,8 @@ class Maze():
         self.num_cols = num_cols
         self.cell_size_x = cell_size_x
         self.cell_size_y = cell_size_y
+        self._start = None
+        self._stop = None
 
         self._cells = []
 
@@ -27,6 +29,17 @@ class Maze():
 
     def get_cells(self):
         return self._cells
+    
+    def get_random_cell(self):
+        col = random.randint(0,self.num_cols)
+        row = random.randint(0,self.num_rows)
+        return self._cells[row][col]
+    
+    def get_start(self):
+        return self._start
+    
+    def get_stop(self):
+        return self._stop
 
     def _create_cells(self):
         cells = []
@@ -76,8 +89,17 @@ class Maze():
         w = self.cell_size_x
         return Line(Point(x+(x1*w), y+(y1*h)), Point(x+(x2*w), y+(y2*h)))
     
+    def get_path_lines(self, cells=[]):
+        lines = []
+        c1 = cells[0]
+        for i in range(len(cells)-1):
+            c2 = cells[i+1]
+            lines.append(self._line_adjusted(c1.col+.5, c1.row+.5, c2.col+.5, c2.row+.5))
+        return lines
+    
     def create_binary_maze(self):
-
+        self._start = self._cells[0][0]
+        self._stop = self._cells[-1][-1]
         to_visit = []
         for row in self._cells:
             to_visit.extend(row)
@@ -95,6 +117,8 @@ class Maze():
                 cell.connect(cell.right)
 
     def create_sidewinder_maze(self):
+        self._start = self._cells[0][0]
+        self._stop = self._cells[-1][-1]
         run = []
         for row in self._cells:
             
